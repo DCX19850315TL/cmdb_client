@@ -23,12 +23,16 @@ def RequestUrl(host,port,source,params,timeout):
         raise e
     return original
 
+server_info={
+    'hwaddr':'00:00:0c:12:23:34'
+}
+
 if __name__ == '__main__':
-    times = 0
-    while True:
+    #times = 0
+    #while True:
         RequestData = {'data':server_info}
         RequestData = json.dumps(RequestData)
-        result = RequestUrl('127.0.0.1','8888','/api/server',RequestData,30)
+        result = RequestUrl('127.0.0.1','9000','/receive_server_info/',RequestData,30)
         print '======第%d次请求，结果为: %s========= %(times,result)'
-        times += 1
-        time.sleep(3)
+        #times += 1
+        #time.sleep(3)
