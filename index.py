@@ -12,7 +12,8 @@ import time
 import json
 
 def RequestUrl(host,port,source,params,timeout):
-    headers = {"Content-type":"application/json"}
+    headers = {"Content-type":"application/x-www-form-urlencoded"}
+
     try:
         conn = httplib.HTTPConnection(host,port,timeout)
         conn.request('POST',source,params,headers)
@@ -23,9 +24,8 @@ def RequestUrl(host,port,source,params,timeout):
         raise e
     return original
 
-server_info={
-    'hwaddr':'00:00:0c:12:23:34'
-    'cpu':'x86_64'
+server_info = {
+    'a':'aa'
 }
 
 if __name__ == '__main__':
