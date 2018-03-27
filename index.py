@@ -25,6 +25,7 @@ def RequestUrl(host,port,source,params,timeout):
 
 server_info={
     'hwaddr':'00:00:0c:12:23:34'
+    'cpu':'x86_64'
 }
 
 if __name__ == '__main__':
