@@ -8,16 +8,35 @@
 '''
 import httplib
 import urllib
+import time
 import json
+from plugins import PluginApi
 
-try:
-    test = '{"data":1111}'
-    JsonData = json.dumps(test)
+class Program():
+    def __init__(self):
+        self.server_response = PluginApi.get_server_info()
 
-    httpClient = httplib.HTTPConnection('127.0.0.1','9000','10')
-    httpClient.request('POST','/receive_server_info/',JsonData)
-    response = httpClient.getresponse()
-    orgint = response.read()
-    print orgint
-except Exception,e:
-    print e
+    def execute(self):
+        if self.server_response.status:
+
+            params = urllib.urlencode({"data":json.dumps(self.server_response.data)})
+            self.submit_data('127.0.0.1','9000','/receive_server_info/',params,30)
+
+    def submit_data(self,host,port,source,params,timeout):
+        headers = {"Content-type":"application/json"}
+        try:
+            conn = httplib.HTTPConnection(host,port,timeout)
+            conn.request('POST',source,params,headers)
+            response = conn.getresponse()
+            original = response.read()
+        except Exception,e:
+            raise e
+        return original
+
+if __name__ == '__main__':
+    times = 0
+    while True:
+        objProgram = Program()
+        objProgram.execute()
+        times += 1
+        time.sleep(10)
